@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Class of package will be send though internet
+ * Class of package will be send though Internet
  * @author Arvin
  */
 public class OperationPackage implements Serializable {
