@@ -12,12 +12,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.Serializable;
 
 /**
  *
  * @author Arvin
  */
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private long userID;
     private String name, passwd;
@@ -33,6 +36,10 @@ public class User {
         this.name = name;
         this.passwd = passwd;
         this.gpaList = new ArrayList<>();
+    }
+
+    public User() {
+        this("", "", null);
     }
 
     public String getName() {
@@ -88,7 +95,6 @@ public class User {
             gpaList = new ArrayList<>();
         }
         gpaList.add(newRecord);
-
     }
 
     public void addGpa(List<GPARecord> newList) {
