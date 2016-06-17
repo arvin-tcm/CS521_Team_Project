@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mayfa/Documents/NetBeansProjects/CS521_Team_Project/src/Domain/CourseRecord.java</file>
-            <file>file:/C:/Users/mayfa/Documents/NetBeansProjects/CS521_Team_Project/src/Domain/GPARecord.java</file>
-            <file>file:/C:/Users/mayfa/Documents/NetBeansProjects/CS521_Team_Project/src/Domain/TimeStampInterface.java</file>
+            <file>file:/C:/Users/mayfa/Documents/NetBeansProjects/CS521_Team_Project/src/Service/RMIServer/UserServiceInterface.java</file>
+            <file>file:/C:/Users/mayfa/Documents/NetBeansProjects/CS521_Team_Project/src/Service/RMIServer/UserServiceInterfaceImpl.java</file>
             <file>file:/C:/Users/mayfa/Documents/NetBeansProjects/CS521_Team_Project/src/Domain/User.java</file>
-            <file>file:/C:/Users/mayfa/Documents/NetBeansProjects/CS521_Team_Project/src/Domain/TimeStamp.java</file>
+            <file>file:/C:/Users/mayfa/Documents/NetBeansProjects/CS521_Team_Project/src/Domain/OperationPackage.java</file>
         </group>
     </open-files>
 </project-private>
