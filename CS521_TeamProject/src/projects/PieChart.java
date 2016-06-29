@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cs532_mvccharts;
+package projects;
 
 import javax.swing.*;
 import java.util.*;
