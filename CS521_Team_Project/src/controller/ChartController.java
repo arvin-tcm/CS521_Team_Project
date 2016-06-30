@@ -78,14 +78,14 @@ public class ChartController extends JFrame {
         jbtAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JTextField jtfCourseName = new JTextField("Empty");
+                JTextField jtfCourseName = new JTextField();
                 JComboBox jcbGpa = new JComboBox(model.getGpaKeyList());
                 SpinnerNumberModel numModel = new SpinnerNumberModel(1, 0, 5, 1);
                 JSpinner jspCredits = new JSpinner(numModel);
                 mainLayout.setRows(mainLayout.getRows() + 1);
                 
-                // setup
-                jtfCourseName.setPreferredSize(new Dimension(80, 10));
+                // setup components' size, and text alignment to center
+                jtfCourseName.setPreferredSize(new Dimension(140, 40));
                 jtfCourseName.setHorizontalAlignment(JTextField.CENTER);
                 ((JLabel) jcbGpa.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
                 ((JSpinner.DefaultEditor) jspCredits.getEditor()).getTextField().setHorizontalAlignment(JTextField.CENTER);
@@ -116,17 +116,25 @@ public class ChartController extends JFrame {
                 String[] courseName = new String[count];
                 double result;
                 int[] credits = new int[count];
+                
+                // generate the data set from all the input component as an array
                 for (int i = 0; i < count; i++) {
                     gpa[i] = model.getGpaMap().get(jcbGpaList.get(i).getSelectedItem().toString());
                     courseName[i] = jtfCourseNameList.get(i).getText();
                     credits[i] = (Integer) jspCreditsList.get(i).getValue();
                 }
+                
+                // input data to the model
                 model.setChartData(courseName, gpa, credits);
+                
+                // calculate the average GPA
                 result = model.calculateAverageGpa();
+                
                 if (!triggered) {
                     triggered = true;
                     return;
                 }
+                
                 JOptionPane.showMessageDialog(null,
                         "Your average GPA is: " + new DecimalFormat("0.00").format(result),
                         "result",

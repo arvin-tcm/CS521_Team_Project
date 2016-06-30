@@ -36,7 +36,6 @@ public class BarChart extends JFrame implements ActionListener {
                     int endY = (int) model.getGpa()[i] * 15;
                     g.setColor(colorList[i % 5]);
                     g.fillRect(ax, ay - endY, 60, endY);
-                    //g.fillRect(ax, ay, 60, 0 - (int) model.getGpa()[i] * 15);
                     g.setColor(Color.black);
                     g.drawString(model.getCourseName()[i], ax, ay - endY - 5);
                     g.drawRect(ax, ay - endY, 60, endY);
@@ -45,7 +44,6 @@ public class BarChart extends JFrame implements ActionListener {
         };
         add(panel);
         setTitle("Bar Chart");
-        //setLayout(null);
         setSize(80 * model.getGpa().length, 300);
         setVisible(true);
     }
