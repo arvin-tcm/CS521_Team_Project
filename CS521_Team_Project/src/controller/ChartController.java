@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * Student Info: Name=Tsai-Chang Mai, ID=10010
+ * Subject: CS521_Team_Project_Summer_2016
+ * Author: Arvin-tcm 
+ * Filename: ChartController.java 
+ * Date and Time: Jun 29, 2016 10:08:14 PM 
+ * Project Name: CS521_Team_Project 
  */
-package projects;
+package controller;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -18,23 +21,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import model.ChartModel;
 
-/**
- *
- * @author Arvin
- */
-class ChartController extends JFrame {
+public class ChartController extends JFrame {
 
     private final ArrayList<JComboBox> jcbGpaList = new ArrayList<>();
     private final ArrayList<JTextField> jtfCourseNameList = new ArrayList<>();
-    private final ArrayList<JTextField> jtfCreditsList = new ArrayList<>();
+    private final ArrayList<JSpinner> jspCreditsList = new ArrayList<>();
     private final JLabel jlbGPA = new JLabel("GPA");
     private final JLabel jlbCourseName = new JLabel("Course Name");
     private final JLabel jlbCredits = new JLabel("Credits");
     private final JButton jbtSave = new JButton("Save");
     private final JButton jbtAdd = new JButton("Add new data");
     private final ChartModel model;
+    private boolean triggered = false;
 
     public ChartController(ChartModel model) {
         this.model = model;
@@ -44,7 +47,6 @@ class ChartController extends JFrame {
         final JPanel labelPanel = new JPanel(new GridLayout(1, 3));
         setTitle("Chart Controller");
         setLayout(new BorderLayout());
-        //setLayout(new GridLayout(3, 2));
         add(dataPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
         add(labelPanel, BorderLayout.NORTH);
@@ -62,20 +64,18 @@ class ChartController extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JTextField jtfCourseName = new JTextField("Empty");
-                /*
-                JTextField jtfGpa = new JTextField("0");
-                 */
                 JComboBox jcbGpa = new JComboBox(model.getGpaKeyList());
-                JTextField jtfCredits = new JTextField("1");
+                SpinnerNumberModel numModel = new SpinnerNumberModel(1, 0, 5, 1);
+                JSpinner jspCredits = new JSpinner(numModel);
                 myLayout.setRows(myLayout.getRows() + 1);
                 dataPanel.add(jtfCourseName);
                 dataPanel.add(jcbGpa);
-                dataPanel.add(jtfCredits);
+                dataPanel.add(jspCredits);
                 dataPanel.revalidate();
                 dataPanel.repaint();
                 jcbGpaList.add(jcbGpa);
                 jtfCourseNameList.add(jtfCourseName);
-                jtfCreditsList.add(jtfCredits);
+                jspCreditsList.add(jspCredits);
             }
         });
         jbtSave.addActionListener(new ActionListener() {
@@ -88,14 +88,14 @@ class ChartController extends JFrame {
                 int[] credits = new int[count];
                 for (int i = 0; i < count; i++) {
                     gpa[i] = model.getGpaMap().get(jcbGpaList.get(i).getSelectedItem().toString());
-                    //gpa[i] = Double.parseDouble(jcbGpaList.get(i).getSelectedItem().toString());
                     courseName[i] = jtfCourseNameList.get(i).getText();
-                    credits[i] = Integer.parseInt(jtfCreditsList.get(i).getText());
+                    credits[i] = (Integer) jspCreditsList.get(i).getValue();
                 }
                 model.setChartData(courseName, gpa, credits);
                 result = model.calculateAverageGpa();
-                for (double d : gpa) {
-                    System.out.print(d);
+                if (!triggered) {
+                    triggered = true;
+                    return;
                 }
                 JOptionPane.showMessageDialog(null,
                         "Your average GPA is: " + new DecimalFormat("0.00").format(result),
@@ -105,5 +105,7 @@ class ChartController extends JFrame {
         });
         setSize(500, 150);
         setVisible(true);
+        jbtAdd.doClick();
+        jbtSave.doClick();
     }
 }

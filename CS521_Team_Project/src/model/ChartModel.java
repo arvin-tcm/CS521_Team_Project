@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * Student Info: Name=Tsai-Chang Mai, ID=10010
+ * Subject: CS521_Team_Project_Summer_2016
+ * Author: Arvin-tcm 
+ * Filename: ChartModel.java 
+ * Date and Time: Jun 29, 2016 10:08:31 PM 
+ * Project Name: CS521_Team_Project 
  */
-package projects;
+package model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,11 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * @author Arvin
- */
-class ChartModel {
+public class ChartModel {
 
     private double[] gpa;
     private String[] courseName;
@@ -89,12 +88,12 @@ class ChartModel {
         return credits;
     }
 
-    public double dataSum() {
-        double dataSum = 0.0;
-        for (double d : gpa) {
-            dataSum += d;
+    public double CreditsSum() {
+        double creditsSum = 0.0;
+        for (double d : credits) {
+            creditsSum += d;
         }
-        return dataSum;
+        return creditsSum;
     }
 
     public double calculateAverageGpa() {

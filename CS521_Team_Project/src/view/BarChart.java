@@ -1,10 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * Student Info: Name=Tsai-Chang Mai, ID=10010
+ * Subject: CS521_Team_Project_Summer_2016
+ * Author: Arvin-tcm 
+ * Filename: BarChart.java 
+ * Date and Time: Jun 29, 2016 10:07:58 PM 
+ * Project Name: CS521_Team_Project 
  */
-package projects;
+package view;
 
+import model.ChartModel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -12,11 +16,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Arvin
- */
-class BarChart extends JFrame implements ActionListener {
+public class BarChart extends JFrame implements ActionListener {
 
     private ChartModel model;
     private final Color[] colorList = {Color.pink, Color.red, Color.white, Color.green, Color.cyan};
@@ -46,7 +46,7 @@ class BarChart extends JFrame implements ActionListener {
         add(panel);
         setTitle("Bar Chart");
         //setLayout(null);
-        setSize(300, 300);
+        setSize(80 * model.getGpa().length, 300);
         setVisible(true);
     }
 
