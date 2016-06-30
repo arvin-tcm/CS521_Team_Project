@@ -25,7 +25,7 @@ public class PieChart extends JFrame implements ActionListener {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            double radians, creditTotal = model.CreditsSum();
+            double radians, creditTotal = model.creditsSum();
             int startAngle = 0;
             int x, y, radius, xCenter, yCenter;
             xCenter = getWidth() / 2;

@@ -48,6 +48,7 @@ public class ChartMain extends JFrame {
                 controller = new ChartController(model);
             }
         });
+
         jbtPieChartView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +62,7 @@ public class ChartMain extends JFrame {
                 PieChart chart = new PieChart(model);
             }
         });
+
         jbtBarChartView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,11 +82,7 @@ public class ChartMain extends JFrame {
         setVisible(true);
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
         ChartMain frame = new ChartMain();
     }
 

@@ -9,6 +9,7 @@
 package controller;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,25 +25,37 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import model.ChartModel;
 
 public class ChartController extends JFrame {
 
+    // list of all exist input components(GPA, course name, course credits)
     private final ArrayList<JComboBox> jcbGpaList = new ArrayList<>();
     private final ArrayList<JTextField> jtfCourseNameList = new ArrayList<>();
     private final ArrayList<JSpinner> jspCreditsList = new ArrayList<>();
+    // label of each column(GPA, course name, course credits)
     private final JLabel jlbGPA = new JLabel("GPA");
     private final JLabel jlbCourseName = new JLabel("Course Name");
     private final JLabel jlbCredits = new JLabel("Credits");
+    // button the save the record
     private final JButton jbtSave = new JButton("Save");
+    // button to add new record
     private final JButton jbtAdd = new JButton("Add new data");
+    // model for all the data
     private final ChartModel model;
+    // the controller has been triggered yet
     private boolean triggered = false;
 
+    /**
+     * user-defined constructor
+     *
+     * @param model
+     */
     public ChartController(ChartModel model) {
         this.model = model;
-        final GridLayout myLayout = new GridLayout(0, 3);
-        final JPanel dataPanel = new JPanel(myLayout);
+        final GridLayout mainLayout = new GridLayout(0, 3);
+        final JPanel dataPanel = new JPanel(mainLayout);
         final JPanel buttonPanel = new JPanel(new FlowLayout());
         final JPanel labelPanel = new JPanel(new GridLayout(1, 3));
         setTitle("Chart Controller");
@@ -60,6 +73,8 @@ public class ChartController extends JFrame {
         labelPanel.add(jlbGPA);
         labelPanel.add(jlbCredits);
 
+        // add action listener to the button "Add"
+        // add one addition row to the data panel
         jbtAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,17 +82,32 @@ public class ChartController extends JFrame {
                 JComboBox jcbGpa = new JComboBox(model.getGpaKeyList());
                 SpinnerNumberModel numModel = new SpinnerNumberModel(1, 0, 5, 1);
                 JSpinner jspCredits = new JSpinner(numModel);
-                myLayout.setRows(myLayout.getRows() + 1);
+                mainLayout.setRows(mainLayout.getRows() + 1);
+                
+                // setup
+                jtfCourseName.setPreferredSize(new Dimension(80, 10));
+                jtfCourseName.setHorizontalAlignment(JTextField.CENTER);
+                ((JLabel) jcbGpa.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+                ((JSpinner.DefaultEditor) jspCredits.getEditor()).getTextField().setHorizontalAlignment(JTextField.CENTER);
+
                 dataPanel.add(jtfCourseName);
                 dataPanel.add(jcbGpa);
                 dataPanel.add(jspCredits);
+                
                 dataPanel.revalidate();
                 dataPanel.repaint();
+                
+                // add all the components to the list as record
                 jcbGpaList.add(jcbGpa);
                 jtfCourseNameList.add(jtfCourseName);
                 jspCreditsList.add(jspCredits);
+                
+                pack();
             }
         });
+
+        // add action listener to the button "Save"
+        // save the data to model and calculate the average GPA
         jbtSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -16,36 +16,53 @@ import java.util.Map;
 
 public class ChartModel {
 
+    // data set of all the gpa record
     private double[] gpa;
+    // data set of all the course name record
     private String[] courseName;
+    // data set of all the course credits record
     private int[] credits;
-    private String[] gpaKeyList = {"A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"};
-    private double[] gpaValueList = {4, 4, 3.7, 3.3, 3, 2.7, 2.3, 2, 1.7, 1.3, 1, 0.7, 0};
-    private Map<String, Double> gpaMap = new HashMap<>();
+    // data set of the letter grades
+    private final String[] gpaKeyList = {"A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"};
+    // data set of the grades value
+    private final double[] gpaValueList = {4, 4, 3.7, 3.3, 3, 2.7, 2.3, 2, 1.7, 1.3, 1, 0.7, 0};
+    // data mapping for letter grade and values
+    private final Map<String, Double> gpaMap = new HashMap<>();
+    // store all the action listener
     private final ArrayList<ActionListener> actionListenerList = new ArrayList<>();
 
+    /**
+     * Default constructor Initialize the map of letter grade and value
+     */
     public ChartModel() {
         for (int i = 0; i < gpaKeyList.length; i++) {
             gpaMap.put(gpaKeyList[i], gpaValueList[i]);
         }
-        /*
-        for (Object s :gpaMap.keySet().toArray()) {
-            System.out.println((String)s);
-        }
-        for (Object s :gpaMap.values().toArray()) {
-            System.out.println((Double)s);
-        }
-         */
     }
 
+    /**
+     * add action listener
+     *
+     * @param l
+     */
     public void addActionListener(ActionListener l) {
         actionListenerList.add(l);
     }
 
+    /**
+     * remove action listener
+     *
+     * @param l
+     */
     public void removeActionListener(ActionListener l) {
         actionListenerList.remove(l);
     }
 
+    /**
+     * fire events
+     *
+     * @param e
+     */
     private void processEvent(ActionEvent e) {
         for (ActionListener listener : actionListenerList) {
             listener.actionPerformed(e);
@@ -57,6 +74,13 @@ public class ChartModel {
         return "ChartModel{" + "data=" + gpa + ", dataName=" + courseName + '}';
     }
 
+    /**
+     * data input
+     *
+     * @param newDataName
+     * @param newData
+     * @param newCredit
+     */
     public void setChartData(String[] newDataName, double[] newData, int[] newCredit) {
         courseName = newDataName;
         gpa = newData;
@@ -88,7 +112,12 @@ public class ChartModel {
         return credits;
     }
 
-    public double CreditsSum() {
+    /**
+     * calculate the total sum of all the course credits
+     *
+     * @return sum
+     */
+    public double creditsSum() {
         double creditsSum = 0.0;
         for (double d : credits) {
             creditsSum += d;
@@ -96,12 +125,16 @@ public class ChartModel {
         return creditsSum;
     }
 
+    /**
+     * calculate the after all average GPA
+     *
+     * @return average GPA
+     */
     public double calculateAverageGpa() {
-        double totalGpa = 0, totalCredit = 0;
+        double totalGpa = 0, totalCredit = creditsSum();
 
         for (int i = 0; i < credits.length; i++) {
             totalGpa = totalGpa + (credits[i] * gpa[i]);
-            totalCredit += credits[i];
         }
         return totalGpa / totalCredit;
     }
