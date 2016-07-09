@@ -8,10 +8,7 @@
  */
 package model;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -36,6 +33,6 @@ public class TestChartModel {
         double result = 3.324;
         sampleUnit.setCredits(sampleCredits);
         sampleUnit.setGpa(sampleGPAs);
-        assertEquals(result, (double)sampleUnit.calculateAverageGpa(), 0.001);
+        assertEquals(result, (double) sampleUnit.calculateAverageGpa(), 0.001);
     }
 }
