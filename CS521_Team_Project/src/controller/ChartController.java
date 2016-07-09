@@ -83,7 +83,7 @@ public class ChartController extends JFrame {
                 SpinnerNumberModel numModel = new SpinnerNumberModel(1, 0, 5, 1);
                 JSpinner jspCredits = new JSpinner(numModel);
                 mainLayout.setRows(mainLayout.getRows() + 1);
-                
+
                 // setup components' size, and text alignment to center
                 jtfCourseName.setPreferredSize(new Dimension(140, 40));
                 jtfCourseName.setHorizontalAlignment(JTextField.CENTER);
@@ -93,15 +93,15 @@ public class ChartController extends JFrame {
                 dataPanel.add(jtfCourseName);
                 dataPanel.add(jcbGpa);
                 dataPanel.add(jspCredits);
-                
+
                 dataPanel.revalidate();
                 dataPanel.repaint();
-                
+
                 // add all the components to the list as record
                 jcbGpaList.add(jcbGpa);
                 jtfCourseNameList.add(jtfCourseName);
                 jspCreditsList.add(jspCredits);
-                
+
                 pack();
             }
         });
@@ -116,25 +116,25 @@ public class ChartController extends JFrame {
                 String[] courseName = new String[count];
                 double result;
                 int[] credits = new int[count];
-                
+
                 // generate the data set from all the input component as an array
                 for (int i = 0; i < count; i++) {
                     gpa[i] = model.getGpaMap().get(jcbGpaList.get(i).getSelectedItem().toString());
                     courseName[i] = jtfCourseNameList.get(i).getText();
                     credits[i] = (Integer) jspCreditsList.get(i).getValue();
                 }
-                
+
                 // input data to the model
                 model.setChartData(courseName, gpa, credits);
-                
+
                 // calculate the average GPA
                 result = model.calculateAverageGpa();
-                
+
                 if (!triggered) {
                     triggered = true;
                     return;
                 }
-                
+
                 JOptionPane.showMessageDialog(null,
                         "Your average GPA is: " + new DecimalFormat("0.00").format(result),
                         "result",

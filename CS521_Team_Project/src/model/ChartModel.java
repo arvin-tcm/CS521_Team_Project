@@ -88,6 +88,18 @@ public class ChartModel {
         processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "test"));
     }
 
+    public void setGpa(double[] gpa) {
+        this.gpa = gpa;
+    }
+
+    public void setCourseName(String[] courseName) {
+        this.courseName = courseName;
+    }
+
+    public void setCredits(int[] credits) {
+        this.credits = credits;
+    }
+
     public String[] getGpaKeyList() {
         return gpaKeyList;
     }
