@@ -24,7 +24,7 @@ import view.PieChart;
 public class ChartMain extends JFrame {
 
     private final JButton jbtController = new JButton("Controller");
-    private final JButton jbtPieChartView = new JButton("Pei Chart");
+    private final JButton jbtPieChartView = new JButton("Pie Chart");
     private final JButton jbtBarChartView = new JButton("Bar Chart");
     private final ChartModel model = new ChartModel();
     private ChartController controller = null;
@@ -52,7 +52,7 @@ public class ChartMain extends JFrame {
         jbtPieChartView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (controller == null) {
+                if (model.getGpa().length == 0) {
                     JOptionPane.showMessageDialog(null,
                             "You must initialize the controller first to generate chart!",
                             "Error",
@@ -66,7 +66,7 @@ public class ChartMain extends JFrame {
         jbtBarChartView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (controller == null) {
+                if (model.getGpa().length == 0) {
                     JOptionPane.showMessageDialog(null,
                             "You must initialize the controller first to generate chart!",
                             "Error",

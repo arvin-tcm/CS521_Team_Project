@@ -42,11 +42,58 @@ public class PieChart extends JFrame implements ActionListener {
                 int ax = (int) (xCenter + (radius * Math.cos(radians)));
                 int ay = (int) (yCenter - (radius * Math.sin(radians)));
                 labelList.get(i).setSize(labelList.get(i).getPreferredSize());
-                labelList.get(i).setLocation(ax, ay);
+
+                //adjust the coordinate
+                int height = (int) labelList.get(i).getPreferredSize().getHeight();
+                int width = (int) labelList.get(i).getPreferredSize().getWidth();
+                int mode = 0;
+                if (isInCircle(xCenter, yCenter, ax, ay + height, radius)) {
+                    mode += 1;
+                }
+                if (isInCircle(xCenter, yCenter, ax + width, ay, radius)) {
+                    mode += 2;
+                }
+                if (isInCircle(xCenter, yCenter, ax + width, ay + height, radius)) {
+                    mode += 4;
+                }
+                switch (mode) {
+                    case 0:
+                        labelList.get(i).setLocation(ax, ay);
+                        break;
+                    case 1:
+                        labelList.get(i).setLocation(ax, ay - height);
+                        break;
+                    case 2:
+                        labelList.get(i).setLocation(ax - width, ay);
+                        break;
+                    case 4:
+                        labelList.get(i).setLocation(ax - width, ay);
+                        break;
+                    case 5:
+                        labelList.get(i).setLocation(ax, ay - height);
+                        break;
+                    case 6:
+                        labelList.get(i).setLocation(ax - width, ay);
+                        break;
+                    case 7:
+                        labelList.get(i).setLocation(ax - width, ay - height);
+                        break;
+                    default:
+                        break;
+                }
                 startAngle += endAngle;
             }
             g.fillArc(x, y, 2 * radius, 2 * radius, startAngle, 360 - startAngle);
         }
+
+        private boolean isInCircle(int xCenter, int yCenter, int x, int y, int radius) {
+            if (radius < Math.sqrt(Math.pow(x - xCenter, 2) + Math.pow(y - yCenter, 2))) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
     }
     private ChartModel model;
     private final Color[] colorList = {Color.pink, Color.red, Color.white, Color.green, Color.cyan};
@@ -62,18 +109,28 @@ public class PieChart extends JFrame implements ActionListener {
         panel.setLayout(null);
         updateList();
         getContentPane().add(panel);
-        setSize(300, 300);
+        setSize(500, 380);
         setVisible(true);
     }
 
     public void updateList() {
         panel.removeAll();
         labelList.clear();
-        for (String s : model.getCourseName()) {
+        double sum = model.creditsSum();
+        for (int i = 0; i < model.getCredits().length; i++) {
+            String s = model.getCourseName()[i];
+            s = s + "(" + String.format("%.2f", model.getCredits()[i] / sum * 100) + "%)";
             JLabel jlb = new JLabel(s);
             labelList.add(jlb);
             panel.add(jlb);
         }
+        /*
+        for (String s : model.getCourseName()) {
+            s = s + "(" + + "%)";
+            JLabel jlb = new JLabel(s);
+            labelList.add(jlb);
+            panel.add(jlb);
+        }*/
     }
 
     @Override

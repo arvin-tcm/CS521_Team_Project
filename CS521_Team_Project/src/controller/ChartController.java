@@ -44,8 +44,6 @@ public class ChartController extends JFrame {
     private final JButton jbtAdd = new JButton("Add new data");
     // model for all the data
     private final ChartModel model;
-    // the controller has been triggered yet
-    private boolean triggered = false;
 
     /**
      * user-defined constructor
@@ -73,6 +71,41 @@ public class ChartController extends JFrame {
         labelPanel.add(jlbGPA);
         labelPanel.add(jlbCredits);
 
+        // initialize
+        if (this.model.getGpa().length != 0) {
+            for (int i = 0; i < this.model.getGpa().length; i++) {
+                JTextField initJtfCourseName = new JTextField();
+                JComboBox initJcbGpa = new JComboBox(model.getGpaKeyList());
+                SpinnerNumberModel initNumModel = new SpinnerNumberModel(1, 0, 5, 1);
+                JSpinner initJspCredits = new JSpinner(initNumModel);
+                mainLayout.setRows(mainLayout.getRows() + 1);
+
+                // setup components' size, and text alignment to center
+                initJtfCourseName.setPreferredSize(new Dimension(140, 40));
+                initJtfCourseName.setHorizontalAlignment(JTextField.CENTER);
+                ((JLabel) initJcbGpa.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+                ((JSpinner.DefaultEditor) initJspCredits.getEditor()).getTextField().setHorizontalAlignment(JTextField.CENTER);
+
+                //setup data
+                initJtfCourseName.setText(model.getCourseName()[i]);
+                initJcbGpa.setSelectedItem(model.getGpaKeyList()[i]);
+                initJspCredits.setValue(model.getCredits()[i]);
+
+                dataPanel.add(initJtfCourseName);
+                dataPanel.add(initJcbGpa);
+                dataPanel.add(initJspCredits);
+
+                dataPanel.revalidate();
+                dataPanel.repaint();
+
+                // add all the components to the list as record
+                jcbGpaList.add(initJcbGpa);
+                jtfCourseNameList.add(initJtfCourseName);
+                jspCreditsList.add(initJspCredits);
+
+            }
+        }
+        pack();
         // add action listener to the button "Add"
         // add one addition row to the data panel
         jbtAdd.addActionListener(new ActionListener() {
@@ -113,28 +146,39 @@ public class ChartController extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int count = jcbGpaList.size();
                 double[] gpa = new double[count];
-                String[] courseName = new String[count];
+                ArrayList<String> courseName = new ArrayList<>();
                 double result;
                 int[] credits = new int[count];
 
                 // generate the data set from all the input component as an array
                 for (int i = 0; i < count; i++) {
+                    String temp = jtfCourseNameList.get(i).getText();
                     gpa[i] = model.getGpaMap().get(jcbGpaList.get(i).getSelectedItem().toString());
-                    courseName[i] = jtfCourseNameList.get(i).getText();
+
+                    // verify empty course name block
+                    if (temp.isEmpty()) {
+                        JOptionPane.showMessageDialog(null,
+                                "Course name cannot have empty!",
+                                "WARNING",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    } else if (courseName.contains(temp)) {
+                        JOptionPane.showMessageDialog(null,
+                                "Course name cannot have duplicate!",
+                                "WARNING",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    } else {
+                        courseName.add(temp);
+                    }
                     credits[i] = (Integer) jspCreditsList.get(i).getValue();
                 }
 
                 // input data to the model
-                model.setChartData(courseName, gpa, credits);
+                model.setChartData((String[]) courseName.toArray(new String[0]), gpa, credits);
 
                 // calculate the average GPA
                 result = model.calculateAverageGpa();
-
-                if (!triggered) {
-                    triggered = true;
-                    return;
-                }
-
                 JOptionPane.showMessageDialog(null,
                         "Your average GPA is: " + new DecimalFormat("0.00").format(result),
                         "result",
@@ -143,7 +187,7 @@ public class ChartController extends JFrame {
         });
         setSize(500, 150);
         setVisible(true);
-        jbtAdd.doClick();
-        jbtSave.doClick();
+        //jbtAdd.doClick();
+        //jbtSave.doClick();
     }
 }

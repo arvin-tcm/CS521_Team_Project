@@ -17,7 +17,7 @@ import java.util.Map;
 public class ChartModel {
 
     // data set of all the gpa record
-    private double[] gpa;
+    private double[] gpa = new double[0];
     // data set of all the course name record
     private String[] courseName;
     // data set of all the course credits record
@@ -86,18 +86,6 @@ public class ChartModel {
         gpa = newData;
         credits = newCredit;
         processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "test"));
-    }
-
-    public void setGpa(double[] gpa) {
-        this.gpa = gpa;
-    }
-
-    public void setCourseName(String[] courseName) {
-        this.courseName = courseName;
-    }
-
-    public void setCredits(int[] credits) {
-        this.credits = credits;
     }
 
     public String[] getGpaKeyList() {
